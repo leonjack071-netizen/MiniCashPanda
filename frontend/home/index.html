@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MiniCashPanda</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:#071525;
+
+color:#fff;
+
+padding:14px;
+
+padding-bottom:90px;
+
+}
+
+.container{
+
+max-width:390px;
+
+margin:auto;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+
+.logo{
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+.userBox{
+
+background:#132544;
+
+padding:7px 14px;
+
+border-radius:30px;
+
+font-size:13px;
+
+color:#BFD7FF;
+
+}
+
+.balanceCard{
+
+background:linear-gradient(135deg,#18A0FB,#2D5BFF);
+
+padding:18px;
+
+border-radius:22px;
+
+box-shadow:0 10px 25px rgba(0,120,255,.30);
+
+margin-bottom:15px;
+
+}
+
+.balanceTitle{
+
+font-size:13px;
+
+opacity:.8;
+
+margin-bottom:8px;
+
+}
+
+.balance{
+
+font-size:34px;
+
+font-weight:bold;
+
+margin-bottom:16px;
+
+}
+
+.infoRow{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.infoBox{
+
+flex:1;
+
+background:rgba(255,255,255,.12);
+
+border-radius:14px;
+
+padding:10px;
+
+backdrop-filter: blur(10px);
+border:1px solid rgba(255,255,255,.18);
+transition:.3s;
+
+text-align:center;
+
+}
+
+.infoValue{
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+.infoText{
+
+font-size:11px;
+
+opacity:.85;
+
+margin-top:4px;
+
+}
+
+.infoBox:active{
+transform:scale(.97);
+}
+
+.card{
+
+background:#101E3A;
+
+border-radius:18px;
+
+padding:14px;
+
+margin-bottom:14px;
+
+box-shadow:0 6px 18px rgba(0,0,0,.25);
+
+}
+
+.cardTitle{
+
+font-size:17px;
+
+font-weight:bold;
+
+margin-bottom:6px;
+
+}
+
+.cardSub{
+
+font-size:13px;
+
+color:#BFD7FF;
+
+margin-bottom:12px;
+
+}
+
+.btn{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:15px;
+
+font-weight:bold;
+
+color:white;
+
+background:linear-gradient(90deg,#17C8FF,#2ED573);
+
+cursor:pointer;
+
+}
+
+.sectionTitle{
+
+font-size:15px;
+
+font-weight:bold;
+
+color:#7FB8FF;
+
+margin:18px 0 10px;
+
+letter-spacing:1px;
+
+}
+
+.taskCard{
+
+background:#101E3A;
+
+border-radius:18px;
+
+padding:14px;
+
+margin-bottom:12px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+box-shadow:0 6px 18px rgba(0,0,0,.25);
+
+}
+
+.taskLeft h3{
+
+font-size:15px;
+
+margin-bottom:4px;
+
+}
+
+.taskLeft p{
+
+font-size:12px;
+
+color:#A9C8FF;
+
+}
+
+.goBtn{
+
+background:#2D7BFF;
+
+border:none;
+
+color:white;
+
+padding:9px 18px;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.copyBox{
+
+display:flex;
+
+gap:8px;
+
+margin-top:12px;
+
+}
+
+.linkBox{
+
+flex:1;
+
+background:#0C1730;
+
+padding:10px;
+
+border-radius:10px;
+
+font-size:11px;
+
+color:#8FD3FF;
+
+overflow:hidden;
+
+white-space:nowrap;
+
+text-overflow:ellipsis;
+
+}
+
+.copyBtn{
+
+background:#19C37D;
+
+border:none;
+
+padding:10px 14px;
+
+color:white;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.bottomNav{
+
+position:fixed;
+
+left:0;
+
+right:0;
+
+bottom:0;
+
+background:#0A162D;
+
+display:flex;
+
+justify-content:space-around;
+
+padding:10px 0;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.navItem{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+text-decoration:none;
+
+color:#9DB8FF;
+
+font-size:12px;
+
+font-weight:bold;
+
+}
+
+.navActive{
+
+color:#20B8FF;
+
+}
+
+.navIcon{
+
+font-size:20px;
+
+margin-bottom:4px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="logo">
+🐼 MiniCashPanda
+</div>
+
+<div class="userBox" id="userId">
+Loading...
+</div>
+
+</div>
+
+<div class="balanceCard">
+
+    <div class="balanceTitle">
+        TOTAL BALANCE
+    </div>
+
+    <div class="balance" id="userBalance">
+        ৳0
+    </div>
+
+    <div class="infoRow">
+
+        <div class="infoBox">
+            <div class="infoValue" id="totalEarnings">0</div>
+            <div class="infoText">EARNINGS</div>
+        </div>
+
+        <div class="infoBox">
+            <div class="infoValue" id="adsToday">0</div>
+            <div class="infoText">ADS TODAY</div>
+        </div>
+
+        <div class="infoBox">
+            <div class="infoValue" id="totalReferrals">0</div>
+            <div class="infoText">REFERRALS</div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+🎬 Watch & Earn
+</div>
+
+<div class="cardSub">
+Watch one ad and earn instantly.
+</div>
+
+<button class="btn" id="watchAdsBtn">
+▶ Watch Ad
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+🎁 Daily Bonus
+</div>
+
+<div class="cardSub">
+Claim your daily reward.
+</div>
+
+<button class="btn" id="dailyBonusBtn">
+🎁 Claim Bonus
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="cardTitle">
+🤝 Invite Friends
+</div>
+
+<div class="cardSub">
+Earn ৳10 for every successful referral.
+</div>
+
+<div class="copyBox">
+
+<div class="linkBox" id="referralLink">
+Loading...
+</div>
+
+<button class="copyBtn" id="copyBtn">
+COPY
+</button>
+
+</div>
+
+</div>
+
+<div class="sectionTitle">
+TASKS
+</div>
+
+<div class="taskCard">
+
+<div class="taskLeft">
+
+<h3>📢 Join Telegram Channel</h3>
+
+<p>Reward: ৳10</p>
+
+</div>
+
+<button class="goBtn" id="channelBonusBtn">
+
+GO
+
+</button>
+
+</div>
+
+<div class="taskCard">
+
+<div class="taskLeft">
+
+<h3>👥 Join Telegram Group</h3>
+
+<p>Reward: ৳10</p>
+
+</div>
+
+<button class="goBtn" id="groupBonusBtn">
+
+GO
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Bottom Navigation -->
+
+<div class="bottomNav">
+
+<a href="/home/index.html" class="navItem navActive">
+
+<span class="navIcon">🏠</span>
+
+<span>Home</span>
+
+</a>
+
+<a href="/profile/index.html" class="navItem">
+
+<span class="navIcon">👤</span>
+
+<span>Profile</span>
+
+</a>
+
+<a href="/withdraw/index.html" class="navItem">
+
+<span class="navIcon">💸</span>
+
+<span>Withdraw</span>
+
+</a>
+
+<a href="/history/index.html" class="navItem">
+
+<span class="navIcon">📜</span>
+
+<span>History</span>
+
+</a>
+
+</div>
+
+<script>
+
+let telegramId;
+let username;
+let firstName;
+
+if(window.Telegram && Telegram.WebApp.initDataUnsafe.user){
+
+Telegram.WebApp.ready();
+
+const tg=Telegram.WebApp.initDataUnsafe.user;
+
+telegramId=String(tg.id);
+
+username=tg.username||"";
+
+firstName=tg.first_name||"User";
+
+}else{
+
+telegramId="5866101102";
+
+username="testuser";
+
+firstName="Test User";
+
+}
+
+document.getElementById("userId").innerText="ID: "+telegramId;
+
+async function registerUser(){
+
+try{
+
+await fetch("/api/register",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+telegramId,
+
+username,
+
+referralCode:""
+
+})
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function loadUser(){
+
+try{
+
+const response=await fetch("/api/get-user",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+telegramId
+
+})
+
+});
+
+const data=await response.json();
+
+if(!data.success){
+
+alert(data.message);
+
+return;
+
+}
+
+updateUI(data.user);
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function updateUI(user){
+
+document.getElementById("userBalance").innerText="৳"+user.balance;
+
+document.getElementById("totalEarnings").innerText=user.totalEarnings;
+
+document.getElementById("adsToday").innerText=user.adsToday;
+
+document.getElementById("totalReferrals").innerText=user.totalReferrals;
+
+const referralLink=
+"https://t.me/MiniCashPanda_bot?start="+user.referralCode;
+
+document.getElementById("referralLink").innerText=referralLink;
+
+localStorage.setItem("telegramId",user.telegramId);
+
+localStorage.setItem("referralLink",referralLink);
+
+}
+
+async function initialize(){
+
+await registerUser();
+
+await loadUser();
+
+}
+
+initialize();
+
+document.getElementById("copyBtn").onclick=async()=>{
+
+const link=localStorage.getItem("referralLink");
+
+await navigator.clipboard.writeText(link);
+
+alert("Referral Link Copied!");
+
+};
+
+document.getElementById("watchAdsBtn").onclick=async()=>{
+
+const response=await fetch("/api/watch-ad",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+telegramId
+})
+
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+if(data.success){
+
+loadUser();
+
+}
+
+};
+
+document.getElementById("dailyBonusBtn").onclick=async()=>{
+
+const response=await fetch("/api/daily-bonus",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+telegramId
+})
+
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+if(data.success){
+
+loadUser();
+
+}
+
+};
+
+document.getElementById("channelBonusBtn").onclick=()=>{
+
+window.location.href="/channel/index.html";
+
+};
+
+document.getElementById("groupBonusBtn").onclick=()=>{
+
+window.location.href="/group/index.html";
+
+};
+
+</script>
+
+</body>
+
+</html>

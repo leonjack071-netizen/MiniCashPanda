@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <style>
+
+body{
+margin:0;
+padding:20px;
+font-family:Arial,sans-serif;
+background:#08172E;
+color:#fff;
+}
+.profileCard{
+background:linear-gradient(135deg,#18A0FB,#2D5BFF);
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,120,255,.30);
+}
+.header{
+text-align:center;
+margin-bottom:20px;
+}
+
+.avatar{
+width:90px;
+height:90px;
+margin:0 auto 15px;
+border-radius:50%;
+background:linear-gradient(135deg,#18A0FB,#2D5BFF);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+box-shadow:0 8px 25px rgba(0,120,255,.35);
+}
+
+.header h2{
+margin:0;
+font-size:24px;
+font-weight:bold;
+}
+
+.header p{
+margin-top:8px;
+color:#d6e6ff;
+font-size:14px;
+}
+.infoCard{
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.15);
+border-radius:16px;
+padding:14px;
+margin-bottom:14px;
+backdrop-filter:blur(10px);
+}
+
+.label{
+font-size:13px;
+color:#CFE4FF;
+margin-bottom:6px;
+}
+
+.value{
+font-size:20px;
+font-weight:bold;
+color:#fff;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:12px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#18A0FB,#2D5BFF);
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,120,255,.30);
+transition:.3s;
+}
+
+button:active{
+transform:scale(.98);
+}
+h1{
+text-align:center;
+font-size:28px;
+margin-bottom:25px;
+}
+
+h3{
+background:rgba(255,255,255,.10);
+padding:12px;
+border-radius:12px;
+margin-bottom:12px;
+font-size:16px;
+font-weight:500;
+}
+
+</style>
+</head>
+<body>
+   <div class="header">
+
+<div class="avatar">
+👤
+</div>
+
+<h2 id="userName">
+Loading...
+</h2>
+
+<p>
+MiniCashPanda Member
+</p>
+
+</div>
+
+    <div class="profileCard">
+
+    <div class="infoCard">
+    <div class="label">👤 Name</div>
+    <div class="value" id="userName">Loading...</div>
+</div>
+
+<div class="infoCard">
+    <div class="label">🆔 Telegram ID</div>
+    <div class="value" id="telegramId">Loading...</div>
+</div>
+
+<div class="infoCard">
+    <div class="label">💰 Total Balance</div>
+    <div class="value" id="balance">৳0</div>
+</div>
+
+<div class="infoCard">
+    <div class="label">💵 Total Earnings</div>
+    <div class="value" id="earnings">৳0</div>
+</div>
+
+<div class="infoCard">
+    <div class="label">👥 Referrals</div>
+    <div class="value" id="referrals">0</div>
+</div>
+
+    <button id="copyReferralBtn">Copy Referral Link</button>
+
+    <button id="backBtn">Back To Home</button>
+
+    </div>
+
+    <script>
+const telegramId = localStorage.getItem("telegramId");
+
+async function loadProfile() {
+
+const response = await fetch("/api/get-user", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        telegramId
+    })
+});
+
+const data = await response.json();
+
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
+
+    const user = data.user;
+
+    document.getElementById("userName").innerText =
+        "Name: " + (user.username || "Unknown");
+
+    document.getElementById("telegramId").innerText =
+        "Telegram ID: " + user.telegramId;
+
+    document.getElementById("balance").innerText =
+        "Total Balance: ৳" + user.balance;
+
+    document.getElementById("referrals").innerText =
+        "Referral Count: " + user.totalReferrals;
+
+    document.getElementById("earnings").innerText =
+        "Total Earnings: ৳" + user.totalEarnings;
+}
+
+loadProfile();
+
+document.getElementById("copyReferralBtn").addEventListener("click", async () => {
+
+    const code = localStorage.getItem("referralCode") || "";
+
+    await navigator.clipboard.writeText(code);
+
+    alert("Referral Code Copied!");
+
+});
+
+document.getElementById("backBtn").addEventListener("click", () => {
+
+    window.location.href = "/home/index.html";
+
+});
+    </script>
+
+</body>
+</html>

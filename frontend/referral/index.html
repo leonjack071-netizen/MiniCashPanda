@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Referral</title>
+</head>
+<body>
+
+<h2>Referral</h2>
+
+<h3>Your Referral Code</h3>
+<p id="referralCode">Loading...</p>
+<button id="copyBtn">Copy Referral Code</button>
+<p id="copyStatus"></p>
+<button id="backBtn">Back To Home</button>
+
+<script>
+document.getElementById("copyBtn").addEventListener("click", async () => {
+    await navigator.clipboard.writeText(referralCode || "");
+
+    document.getElementById("copyStatus").innerText =
+        "Referral Code Copied!";
+});
+document.getElementById("backBtn").addEventListener("click", () => {
+    window.location.href = "/home/index.html";
+});
+
+const telegramId = localStorage.getItem("telegramId");
+const referralCode = localStorage.getItem("referralCode");
+document.getElementById("referralCode").innerText = referralCode || "No Referral Code";
+
+</script>
+
+</body>
+</html>

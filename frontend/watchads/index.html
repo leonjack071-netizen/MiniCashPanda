@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Watch Ads</title>
+</head>
+
+<body>
+
+    <h1>Watch Ads & Earn</h1>
+
+    <h3>Earn Reward After Watching Ads</h3>
+
+    <button id="watchAdBtn">Watch Ad</button>
+
+    <br><br>
+
+    <p id="message"></p>
+
+    <br>
+
+    <button id="backBtn">Back To Home</button>
+
+    <script>
+    let telegramId;
+
+    if (window.Telegram && Telegram.WebApp.initDataUnsafe.user) {
+
+    Telegram.WebApp.ready();
+
+    telegramId = String(Telegram.WebApp.initDataUnsafe.user.id);
+
+    } else {
+
+    telegramId = "5866101102";
+
+    alert("Test Mode Enabled");
+
+    }
+    document.getElementById("watchAdBtn").onclick = async function () {
+
+    document.getElementById("message").innerText =
+        "Claiming reward...";
+
+    };
+
+    document.getElementById("backBtn").onclick = function () {
+    window.location.href = "../home/index.html";
+    };
+
+    </script>
+
+</body>
+</html>
