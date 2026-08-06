@@ -35,6 +35,26 @@ const resetBonus = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const { telegramId } = req.body;
+
+    await User.deleteOne({ telegramId });
+
+    return res.json({
+      success: true,
+      message: "User deleted successfully.",
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   resetBonus,
+  deleteUser,
 };
