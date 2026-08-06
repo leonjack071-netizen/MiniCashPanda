@@ -1,7 +1,20 @@
 const TelegramBot = require("node-telegram-bot-api").default;
+
 const bot = new TelegramBot(process.env.BOT_TOKEN, {
-  polling: true,
+  polling: {
+    autoStart: false,
+  },
 });
+
+(async () => {
+  try {
+    await bot.deleteWebHook();
+    await bot.startPolling();
+    console.log("Telegram Bot Started");
+  } catch (err) {
+    console.log("Bot Start Error:", err.message);
+  }
+})();
 
 bot.onText(/\/start(?: (.+))?/, async (msg, match) => {
   const chatId = msg.chat.id;
@@ -27,7 +40,5 @@ const miniAppUrl =
     },
   });
 });
-
-console.log("Telegram Bot Started");
 
 module.exports = bot;
