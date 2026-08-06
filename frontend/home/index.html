@@ -622,7 +622,7 @@ telegramId,
 
 username,
 
-referralCode:""
+referralCode: new URLSearchParams(window.location.search).get("ref") || ""
 
 })
 
