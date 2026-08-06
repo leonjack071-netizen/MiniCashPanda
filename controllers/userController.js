@@ -8,13 +8,19 @@ const registerUser = async (req, res) => {
     // User আগে থেকে আছে কিনা চেক
     let user = await User.findOne({ telegramId });
 
-    if (user) {
-      return res.status(200).json({
-        success: true,
-        message: "User already registered.",
-        user,
-      });
-    }
+if (user) {
+
+  user.username = username;
+
+  await user.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "User already registered.",
+    user,
+  });
+
+}
 
     // নতুন Referral Code তৈরি
     const newReferralCode =
