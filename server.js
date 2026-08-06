@@ -13,6 +13,7 @@ const withdrawRoutes = require("./routes/withdrawRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const telegramRoutes = require("./routes/telegramRoutes");
 const devRoutes = require("./routes/devRoutes");
+require("./bot");
 
 const app = express();
 

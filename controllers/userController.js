@@ -98,7 +98,45 @@ const getUser = async (req, res) => {
   }
 };
 
+const getReferrals = async (req, res) => {
+  try {
+    const { telegramId } = req.body;
+
+    const user = await User.findOne({ telegramId });
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    const referrals = await User.find({
+      referredBy: user.referralCode
+    }).select("telegramId username");
+
+    return res.json({
+      success: true,
+      totalReferrals: referrals.length,
+      referrals
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Server Error"
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   getUser,
 };
+
+module.exports = {
+  registerUser,
+  getUser,
+  getReferrals,
+};
+

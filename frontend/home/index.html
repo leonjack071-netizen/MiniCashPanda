@@ -577,29 +577,30 @@ let telegramId;
 let username;
 let firstName;
 
-if(window.Telegram && Telegram.WebApp.initDataUnsafe.user){
+const tg = window.Telegram?.WebApp;
 
-Telegram.WebApp.ready();
+if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
 
-const tg=Telegram.WebApp.initDataUnsafe.user;
+    tg.ready();
+    tg.expand();
 
-telegramId=String(tg.id);
+    const user = tg.initDataUnsafe.user;
 
-username=tg.username||"";
+    telegramId = String(user.id);
+    username = user.username || "";
+    firstName = user.first_name || "User";
 
-firstName=tg.first_name||"User";
+} else {
 
-}else{
+    alert("Telegram User Data Not Found!");
 
-telegramId="5866101102";
-
-username="testuser";
-
-firstName="Test User";
+    telegramId = "5866101102";
+    username = "testuser";
+    firstName = "Test User";
 
 }
 
-document.getElementById("userId").innerText="ID: "+telegramId;
+document.getElementById("userId").innerText = "ID: " + telegramId;
 
 async function registerUser(){
 

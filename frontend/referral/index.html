@@ -9,24 +9,78 @@
 
 <h3>Your Referral Code</h3>
 <p id="referralCode">Loading...</p>
+
+<h3>Total Referrals</h3>
+<p id="totalReferrals">0</p>
+
+<h3>Referral Users</h3>
+<div id="referralList">
+No referrals yet.
+</div>
+
 <button id="copyBtn">Copy Referral Code</button>
 <p id="copyStatus"></p>
+
 <button id="backBtn">Back To Home</button>
 
 <script>
-document.getElementById("copyBtn").addEventListener("click", async () => {
-    await navigator.clipboard.writeText(referralCode || "");
-
-    document.getElementById("copyStatus").innerText =
-        "Referral Code Copied!";
-});
-document.getElementById("backBtn").addEventListener("click", () => {
-    window.location.href = "/home/index.html";
-});
 
 const telegramId = localStorage.getItem("telegramId");
 const referralCode = localStorage.getItem("referralCode");
-document.getElementById("referralCode").innerText = referralCode || "No Referral Code";
+
+document.getElementById("referralCode").innerText =
+referralCode || "No Referral Code";
+
+document.getElementById("copyBtn").onclick = async () => {
+    await navigator.clipboard.writeText(referralCode || "");
+    document.getElementById("copyStatus").innerText =
+    "Referral Code Copied!";
+};
+
+document.getElementById("backBtn").onclick = () => {
+    window.location.href = "/home/index.html";
+};
+
+async function loadReferrals() {
+
+    const response = await fetch("/api/get-referrals", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ telegramId })
+    });
+
+    const data = await response.json();
+
+    if (!data.success) return;
+
+    document.getElementById("totalReferrals").innerText =
+    data.totalReferrals;
+
+    const list = document.getElementById("referralList");
+
+    if (data.referrals.length === 0) {
+        list.innerHTML = "No referrals yet.";
+        return;
+    }
+
+    list.innerHTML = "";
+
+    data.referrals.forEach(user => {
+
+        list.innerHTML += `
+        <div style="background:#1b2d4a;padding:10px;margin:8px 0;border-radius:10px;">
+            <b>${user.username || "User"}</b><br>
+            ID: ${user.telegramId}
+        </div>
+        `;
+
+    });
+
+}
+
+loadReferrals();
 
 </script>
 
