@@ -109,37 +109,29 @@ margin-bottom:16px;
 }
 
 .infoRow{
-
-display:flex;
-
-gap:10px;
-
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
 }
 
 .infoBox{
-
-flex:1;
-
 background:rgba(255,255,255,.12);
-
 border-radius:14px;
-
-padding:10px;
-
-backdrop-filter: blur(10px);
-border:1px solid rgba(255,255,255,.18);
-transition:.3s;
-
+padding:14px;
 text-align:center;
-
 }
 
 .infoValue{
-
 font-size:22px;
-
 font-weight:bold;
+color:#fff;
+}
 
+.infoLabel{
+font-size:13px;
+margin-top:6px;
+color:#d9e7ff;
 }
 
 .infoText{
@@ -437,6 +429,11 @@ Loading...
 
     </div>
 
+<div class="infoBox">
+<div class="infoValue" id="totalAds">0</div>
+<div class="infoLabel">Total Ads</div>
+</div>
+
 </div>
 
 <div class="card">
@@ -691,6 +688,8 @@ document.getElementById("totalEarnings").innerText=user.totalEarnings;
 document.getElementById("adsToday").innerText=user.adsToday;
 
 document.getElementById("totalReferrals").innerText=user.totalReferrals;
+
+document.getElementById("totalAds").innerText = user.watchAdsCount;
 
 const referralLink=
 "https://t.me/MiniCashPanda_bot?start="+user.referralCode;
