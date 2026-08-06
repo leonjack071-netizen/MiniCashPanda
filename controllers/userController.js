@@ -99,6 +99,14 @@ const getUser = async (req, res) => {
       });
     }
 
+const today = new Date().toISOString().split("T")[0];
+
+if (user.adsTodayDate !== today) {
+  user.adsTodayDate = today;
+  user.adsToday = 0;
+  await user.save();
+}
+
     return res.status(200).json({
       success: true,
       user,

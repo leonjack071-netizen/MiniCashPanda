@@ -57,6 +57,12 @@ color:#fff;
 background:linear-gradient(90deg,#1EB8FF,#2BE66B);
 color:#fff;
 }
+
+.backBtn{
+background:#444;
+color:#fff;
+}
+
 </style>
 </head>
 
@@ -74,6 +80,10 @@ JOIN CHANNEL
 
 <button class="claimBtn" id="claimBtn">
 CLAIM BONUS
+</button>
+
+<button class="backBtn" id="backBtn">
+⬅ Back
 </button>
 
 </div>
@@ -127,6 +137,11 @@ document.getElementById("claimBtn").onclick = async function () {
         alert("Server Error");
     }
 };
+
+document.getElementById("backBtn").onclick = function () {
+    window.location.href = "/home/index.html";
+};
+
 </script>
 
 </body>
