@@ -5,6 +5,11 @@ const registerUser = async (req, res) => {
   try {
     const { telegramId, username, referralCode } = req.body;
 
+console.log("========== REGISTER ==========");
+console.log("telegramId:", telegramId);
+console.log("username:", username);
+console.log("referralCode:", referralCode);
+
     // User আগে থেকে আছে কিনা চেক
     let user = await User.findOne({ telegramId });
 
@@ -13,6 +18,8 @@ if (user) {
   user.username = username;
 
   await user.save();
+
+console.log("User saved successfully");
 
   return res.status(200).json({
     success: true,
