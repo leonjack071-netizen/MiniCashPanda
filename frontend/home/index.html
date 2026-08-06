@@ -386,6 +386,10 @@ margin-bottom:4px;
 
 </style>
 
+<script src="//libtl.com/sdk.js"
+data-zone="11519679"
+data-sdk="show_11519679"></script>
+
 </head>
 
 <body>
@@ -721,31 +725,35 @@ alert("Referral Link Copied!");
 
 };
 
-document.getElementById("watchAdsBtn").onclick=async()=>{
+document.getElementById("watchAdsBtn").onclick = async () => {
 
-const response=await fetch("/api/watch-ad",{
+    try {
 
-method:"POST",
+        await show_11519679("pop");
 
-headers:{
-"Content-Type":"application/json"
-},
+        const response = await fetch("/api/watch-ad", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                telegramId
+            })
+        });
 
-body:JSON.stringify({
-telegramId
-})
+        const data = await response.json();
 
-});
+        alert(data.message);
 
-const data=await response.json();
+        if (data.success) {
+            loadUser();
+        }
 
-alert(data.message);
+    } catch (e) {
 
-if(data.success){
+        alert("Ad was not completed.");
 
-loadUser();
-
-}
+    }
 
 };
 
