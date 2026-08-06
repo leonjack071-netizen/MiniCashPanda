@@ -111,27 +111,29 @@ margin-bottom:16px;
 .infoRow{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:18px;
+gap:14px;
+margin-top:22px;
 }
 
 .infoBox{
 background:rgba(255,255,255,.12);
-border-radius:14px;
-padding:14px;
+border-radius:16px;
+padding:16px 10px;
 text-align:center;
+backdrop-filter:blur(10px);
 }
 
 .infoValue{
-font-size:22px;
+font-size:28px;
 font-weight:bold;
 color:#fff;
 }
 
-.infoLabel{
-font-size:13px;
+.infoTitle{
 margin-top:6px;
-color:#d9e7ff;
+font-size:14px;
+color:#dce8ff;
+letter-spacing:.5px;
 }
 
 .infoText{
@@ -412,27 +414,27 @@ Loading...
 
     <div class="infoRow">
 
-        <div class="infoBox">
-            <div class="infoValue" id="totalEarnings">0</div>
-            <div class="infoText">EARNINGS</div>
-        </div>
+       <div class="infoRow">
 
-        <div class="infoBox">
-            <div class="infoValue" id="adsToday">0</div>
-            <div class="infoText">ADS TODAY</div>
-        </div>
+  <div class="infoBox">
+    <div class="infoValue" id="totalEarnings">0</div>
+    <div class="infoTitle">EARNINGS</div>
+  </div>
 
-        <div class="infoBox">
-            <div class="infoValue" id="totalReferrals">0</div>
-            <div class="infoText">REFERRALS</div>
-        </div>
+  <div class="infoBox">
+    <div class="infoValue" id="adsToday">0</div>
+    <div class="infoTitle">ADS TODAY</div>
+  </div>
 
-    </div>
+  <div class="infoBox">
+    <div class="infoValue" id="totalReferrals">0</div>
+    <div class="infoTitle">REFERRALS</div>
+  </div>
 
-<div class="infoBox">
-<div class="infoValue" id="totalAds">0</div>
-<div class="infoLabel">Total Ads</div>
-</div>
+  <div class="infoBox">
+    <div class="infoValue" id="totalAds">0</div>
+    <div class="infoTitle">TOTAL ADS</div>
+  </div>
 
 </div>
 
